@@ -38,7 +38,11 @@ def orgtypes_renderer(orglist, window):
     text_area.configure(state="disabled")
 
 def specific_org_render(organization, window):
-    """Displays certain information about a certain org."""
+    """Displays certain information about a certain org.
+    
+    Each entry of relevant information is hardcoded as labels mostly due to the
+    developers choice of picking TkInter as the GUI. 
+    """
     frame1 = tk.Frame(master=window, pady=4)
     frame1.grid()
 
