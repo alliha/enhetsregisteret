@@ -61,10 +61,27 @@ def specific_org_render(organization, window):
         + organization["naeringskode1"]["beskrivelse"]),
         font=("serif", 12), width=87, justify="left", anchor="w")
     org_næring_label.grid()
-    
-    org_ansatte_label = tk.Label(master=frame1, text=("Ansatte"
-        + organization["antall_Ansatte"]))
+
+    org_ansatte_label = tk.Label(master=frame1, text=("Ansatte: "
+        + str(organization["antallAnsatte"])), 
+        font=("serif", 12), width=87, justify="left", anchor="w")
     org_ansatte_label.grid()
+
+    org_adress = ""
+    if organization["forretningsadresse"]["adresse"]:
+        org_adress = " ".join(organization["forretningsadresse"]["adresse"])\
+        + ", "
+    org_adresse_label = tk.Label(master=frame1, text=("Adr.: " + org_adress
+        + organization["forretningsadresse"]["postnummer"] + " "
+        + organization["forretningsadresse"]["poststed"]),
+        font=("serif", 12), width=87, justify="left", anchor="w")
+    org_adresse_label.grid()
+
+    org_stiftelse_label = tk.Label(master=frame1, text=("Stifta: "
+        + organization["stiftelsesdato"]),
+        font=("serif", 12), width=87, justify="left", anchor="w")
+    org_stiftelse_label.grid()
+
 
 def main():
     window = tk.Tk()
