@@ -3,19 +3,11 @@ import json
 import tkinter as tk
 import tkinter.scrolledtext as st
 
-"""
-Lag en oversikt over de ulike organisasjonsformene som finnes, med tilhørende kode og beskrivelse.
-Lag en visuell oversikt over organisasjonsnummer 956338581 med alle relevante data. Det vil si antall ansatte, navn, organisasjonsform, næringskode osv. (Finner du ikke dette organisasjonsnummeret, velg et annet)
-Skriv en kortfattet dokumentasjon av programkoden du lager.
-
-"""
-
-
 def get_json(api_endpoint):
     """Return JSON of organisation types"""
-    response = requests.get("https://data.brreg.no/enhetsregisteret/api/" + api_endpoint)
-    if response.status_code != 200:
-        #Something went wrong
+    response = requests.get("https://data.brreg.no/enhetsregisteret/api/" 
+        + api_endpoint)
+    if response.status_code != 200:  #confirm server response
         raise Exception
     else:
         return response.json()
