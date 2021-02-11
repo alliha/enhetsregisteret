@@ -27,21 +27,56 @@ def parse_organizations(organizations):
         organizations_list.append((i["kode"], i["beskrivelse"]))
     return organizations_list
 
-def orgtypes_renderer(orglist):
+def orgtypes_renderer(orglist, window):
     """Display the different organization types"""
-    window = tk.Tk()
-    text_area = st.ScrolledText(window)
+    frame = tk.Frame(master=window, width=128, pady=4, bd=0)
+    frame.grid()
+    text_area = st.ScrolledText(master=frame, font=("serif", 12))
     for i in orglist:
         text_area.insert(tk.INSERT, i[0] + ": " + i[1] + "\n")
-
     text_area.grid()
     text_area.configure(state="disabled")
-    window.mainloop()
+
+def specific_org_render(organization, window):
+    """Displays certain information about a certain org."""
+    frame1 = tk.Frame(master=window, pady=4)
+    frame1.grid()
+
+    header_label = tk.Label(master=frame1, text="Oppgåve 2:", 
+        font=("serif", 12), width=87, justify="left", anchor="w")
+    header_label.grid()
+
+    navn_label = tk.Label(master=frame1, text=organization["navn"], 
+        font=("serif", 16), width=64, justify="left", anchor="w")
+    navn_label.grid()
+
+    org_form_label = tk.Label(master=frame1, 
+        text=(organization["organisasjonsform"]["kode"] + ": "
+        + organization["organisasjonsform"]["beskrivelse"]), 
+        font=("serif", 12), width=87, justify="left", anchor="w")
+    org_form_label.grid()
+
+    org_næring_label = tk.Label(master=frame1, text=("Næringsform "
+        + organization["naeringskode1"]["kode"]+": "
+        + organization["naeringskode1"]["beskrivelse"]),
+        font=("serif", 12), width=87, justify="left", anchor="w")
+    org_næring_label.grid()
+    
+    org_ansatte_label = tk.Label(master=frame1, text=("Ansatte"
+        + organization["antall_Ansatte"]))
+    org_ansatte_label.grid()
 
 def main():
+    window = tk.Tk()
+
     organizations = get_json("organisasjonsformer/")
     orglist = parse_organizations(organizations)
-    orgtypes_renderer(orglist)
+    orgtypes_renderer(orglist, window)
+
+    some_org = get_json("enheter/956338581")
+    specific_org_render(some_org, window)
+
+    window.mainloop()
 
 if __name__ == "__main__":
     main()
